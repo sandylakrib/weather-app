@@ -8,33 +8,28 @@ export default function App() {
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [unit, setUnit] = useState("metric");
-  const [error, setError] = useState(""); // new state
+  const [error, setError] = useState("");
 
   const API_KEY = "fa4e1e36ef8ad8e33413079de1576c0b";
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
-    if (!city) return;
-
-    setError(""); // reset error
+  const fetchWeatherData = async (cityName) => {
+    setError("");
     setWeather(null);
     setForecast(null);
 
     try {
       const resWeather = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${unit}&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&units=metric&appid=${API_KEY}`
       );
       const dataWeather = await resWeather.json();
-
       if (dataWeather.cod !== 200) {
         setError("City not found. Please try again.");
         return;
       }
-
       setWeather(dataWeather);
 
       const resForecast = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=${unit}&appid=${API_KEY}`
+        `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=${API_KEY}`
       );
       const dataForecast = await resForecast.json();
       setForecast(dataForecast);
@@ -42,6 +37,12 @@ export default function App() {
       setError("An error occurred. Please try again.");
       console.error(err);
     }
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (!city) return;
+    fetchWeatherData(city);
   };
 
   const toggleUnit = () => {
@@ -68,13 +69,9 @@ export default function App() {
         </button>
       </div>
 
-      {/* Display error message */}
       {error && <p style={{ color: "red", marginTop: 10 }}>{error}</p>}
 
-      {/* Current Weather */}
       <WeatherDisplay weather={weather} unit={unit} />
-
-      {/* 5-Day Forecast */}
       <Forecast forecastData={forecast} unit={unit} />
     </div>
   );

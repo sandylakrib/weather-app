@@ -22,6 +22,9 @@ function summarizeDay(dayData) {
   return { maxTemp, minTemp, icon, description };
 }
 
+// Conversion helpers
+const convertTemp = (temp, unit) => (unit === "metric" ? temp : temp * 9 / 5 + 32);
+
 export default function Forecast({ forecastData, unit }) {
   if (!forecastData) return null;
 
@@ -49,7 +52,8 @@ export default function Forecast({ forecastData, unit }) {
               <img src={iconUrl} alt={summary.description} />
               <p className="forecast-description">{summary.description}</p>
               <p>
-                {Math.round(summary.maxTemp)}° / {Math.round(summary.minTemp)}° {tempUnit}
+                {Math.round(convertTemp(summary.maxTemp, unit))}° /{" "}
+                {Math.round(convertTemp(summary.minTemp, unit))}° {tempUnit}
               </p>
             </div>
           );
