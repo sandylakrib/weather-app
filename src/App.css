@@ -1,0 +1,35 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  font-family: Arial, sans-serif;
+}
+
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+input[type="text"] {
+  flex-grow: 1;
+  padding: 8px;
+  font-size: 16px;
+}
+
+button {
+  padding: 8px 12px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.unit-toggle {
+  margin-bottom: 20px;
+}

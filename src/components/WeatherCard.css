@@ -1,0 +1,38 @@
+.weather-card {
+    border: 1px solid #4D6A86;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #4D6A86; 
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  .forecast-container {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 10px;
+    border-radius: 8px;
+
+  }
+  
+  .forecast-day {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 0px;
+    background-color: #77A2A4; 
+    text-align: center;
+    flex: 1 1 100px; 
+  }
+  
+  .forecast-day img {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .forecast-day p {
+    margin: 4px 0;
+    font-size: 14px;
+  }
+  
