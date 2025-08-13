@@ -8,6 +8,7 @@ export default function App() {
   const [weather, setWeather] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [unit, setUnit] = useState("metric");
+  const [error, setError] = useState(""); // new state
 
   const API_KEY = "fa4e1e36ef8ad8e33413079de1576c0b";
 
@@ -15,21 +16,30 @@ export default function App() {
     e.preventDefault();
     if (!city) return;
 
+    setError(""); // reset error
+    setWeather(null);
+    setForecast(null);
+
     try {
-      // Fetch current weather
       const resWeather = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=${unit}&appid=${API_KEY}`
       );
       const dataWeather = await resWeather.json();
+
+      if (dataWeather.cod !== 200) {
+        setError("City not found. Please try again.");
+        return;
+      }
+
       setWeather(dataWeather);
 
-      // Fetch 5-day forecast
       const resForecast = await fetch(
         `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=${unit}&appid=${API_KEY}`
       );
       const dataForecast = await resForecast.json();
-      setForecast(dataForecast); // pass full response
+      setForecast(dataForecast);
     } catch (err) {
+      setError("An error occurred. Please try again.");
       console.error(err);
     }
   };
@@ -57,6 +67,9 @@ export default function App() {
           Switch to {unit === "metric" ? "°F / mph" : "°C / m/s"}
         </button>
       </div>
+
+      {/* Display error message */}
+      {error && <p style={{ color: "red", marginTop: 10 }}>{error}</p>}
 
       {/* Current Weather */}
       <WeatherDisplay weather={weather} unit={unit} />
