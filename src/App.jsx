@@ -50,7 +50,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <h1>Weather App</h1>
+      <h1>Umbrella or Shades?</h1>
 
       <form onSubmit={handleSearch}>
         <input
