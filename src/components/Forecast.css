@@ -1,42 +1,69 @@
 .forecast-wrapper {
-    margin-top: 30px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .forecast-wrapper h3 {
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  
-  .forecast-grid {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
+  margin-top: 30px;
+  max-width: 900px; /* Increased so all 5 fit in one line on desktop */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.forecast-wrapper h3 {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.forecast-grid {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap; /* Allows wrapping on smaller screens */
+  gap: 10px;
+}
+
+.forecast-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  flex: 1 1 calc(20% - 10px); /* 5 per row on large screens */
+  max-width: 120px; /* Prevents oversized cards */
+  background-color: #18314F; /* Main background color */
+  color: white; /* Make text visible on dark bg */
+  text-align: center;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.forecast-card:hover {
+  transform: translateY(-3px);
+  background-color: #204770; /* Slightly lighter on hover */
+}
+
+.forecast-card p {
+  margin: 5px 0;
+}
+
+.forecast-card .forecast-date {
+  font-weight: bold;
+}
+
+.forecast-card .forecast-description {
+  text-transform: capitalize;
+  margin: 0;
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
   .forecast-card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 10px;
-    width: 100px;
-    background-color: #18314F;
-    text-align: center;
-    margin-bottom: 10px;
+    flex: 1 1 calc(33.333% - 10px); /* 3 per row */
   }
-  
-  .forecast-card p {
-    margin: 5px 0;
+}
+
+@media (max-width: 480px) {
+  .forecast-card {
+    flex: 1 1 calc(50% - 10px); /* 2 per row */
   }
-  
-  .forecast-card .forecast-date {
-    font-weight: bold;
+}
+
+@media (max-width: 320px) {
+  .forecast-card {
+    flex: 1 1 100%; /* 1 per row */
   }
-  
-  .forecast-card .forecast-description {
-    text-transform: capitalize;
-    margin: 0;
-  }
-  
+}
