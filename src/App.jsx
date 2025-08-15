@@ -3,6 +3,7 @@ import WeatherDisplay from "./components/WeatherDisplay";
 import Forecast from "./components/Forecast";
 import "./App.css";
 
+
 export default function App() {
   const [city, setCity] = useState("");
   const [weather, setWeather] = useState(null);
@@ -10,7 +11,7 @@ export default function App() {
   const [unit, setUnit] = useState("metric");
   const [error, setError] = useState("");
 
-  const API_KEY = "fa4e1e36ef8ad8e33413079de1576c0b";
+  const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
   const fetchWeatherData = async (cityName) => {
     setError("");
@@ -32,7 +33,27 @@ export default function App() {
         `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&units=metric&appid=${API_KEY}`
       );
       const dataForecast = await resForecast.json();
-      setForecast(dataForecast);
+
+      const now = new Date();
+      const filteredList = dataForecast.list.filter(item => {
+        const itemDate = new Date(item.dt_txt);
+        return itemDate >= now;
+      });
+
+      const dailyForecast = [];
+      const seenDates = new Set();
+
+      filteredList.forEach(item => {
+        const date = item.dt_txt.split(" ")[0];
+        const hour = item.dt_txt.split(" ")[1];
+
+        if (!seenDates.has(date) && hour === "12:00:00") {
+          dailyForecast.push(item);
+          seenDates.add(date);
+        }
+      });
+
+      setForecast({ ...dataForecast, list: dailyForecast.slice(0, 5) });
     } catch (err) {
       setError("An error occurred. Please try again.");
       console.error(err);
@@ -51,7 +72,8 @@ export default function App() {
 
   return (
     <div className="app">
-      <h1>Umbrella or Shades?</h1>
+       <h1>Umbrella or shades?</h1>
+      <h1> ☔  😎 </h1>
 
       <form onSubmit={handleSearch}>
         <input
